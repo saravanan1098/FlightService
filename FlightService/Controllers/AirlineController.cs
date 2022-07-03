@@ -14,8 +14,8 @@ namespace FlightService.Controllers
     [ApiController]
     public class AirlineController : ControllerBase
     {
-        private  FlightServiceDbContext db;
-        private  IMapper mapper;
+        private FlightServiceDbContext db;
+        private IMapper mapper;
 
         public AirlineController(FlightServiceDbContext _db, IMapper _mapper)
         {
@@ -33,29 +33,40 @@ namespace FlightService.Controllers
             return Ok();
         }
         [HttpGet]
-        public  List<AirlineDto> GetAllAirline()
+        public List<AirlineDto> GetAllAirline()
         {
-            var airlines = mapper.Map < List < AirlineDto >> (db.Airlines);
+            var airlines = mapper.Map<List<AirlineDto>>(db.Airlines);
             return airlines;
         }
         [HttpGet("{id}")]
         public ActionResult<AirlineDto> GetAirlinebyId(int id)
         {
-            
-            var airline =   db.Airlines.FirstOrDefault(a => a.AirlineId == id);
+
+            var airline = db.Airlines.FirstOrDefault(a => a.AirlineId == id);
             if (airline != null)
             {
                 var airline1 = mapper.Map<AirlineDto>(airline);
-                
+
                 return airline1;
             }
             else
             {
-                
+
                 return NotFound();
             }
         }
 
-
+        [HttpDelete("{id}")]
+        public ActionResult DeleteAirlinebyId(int id)
+        {
+            if (db.Airlines.Any(X => X.AirlineId == id))
+            {
+                var data = db.Airlines.Where(X => X.AirlineId == id).FirstOrDefault();
+                db.Airlines.Remove(data);
+                db.SaveChanges();
+                return Ok("Airline Deleted");
+            }
+            return BadRequest("Airline not Exist");
+        }
     }
 }

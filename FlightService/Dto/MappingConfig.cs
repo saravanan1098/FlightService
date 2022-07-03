@@ -13,7 +13,7 @@ namespace FlightService.Dto
         public MappingConfig()
         {
             CreateMap<Airline, AirlineDto>().ReverseMap();
-            CreateMap<Flight, FlightDto>().ReverseMap();
+            CreateMap<Flight, flightDto>().ReverseMap();
         }
     }
 }

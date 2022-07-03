@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FlightService.Dto
 {
-    public class FlightDto
+    public class flightDto
     {
         public string FlightModel { get; set; }
         public string FromPlace { get; set; }
