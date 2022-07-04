@@ -24,29 +24,29 @@ namespace FlightService.Controllers
             mapper = _mapper;
         }
         [HttpPost]
-        public IActionResult AddFlight(flightDto flightdto)
+        public IActionResult AddFlight(FlightDto _flight)
         {
-            Flight flight = new Flight();
-            flight = mapper.Map<Flight>(flightdto);
+           
+            Flight flight = mapper.Map<Flight>(_flight);
 
             db.Flights.Add(flight);
             db.SaveChanges();
             return Ok();
         }
         [HttpGet]
-        public List<flightDto> GetAllFlight()
+        public List<FlightDto> GetAllFlight()
         {
-            var Flights = mapper.Map<List<flightDto>>(db.Flights);
+            var Flights = mapper.Map<List<FlightDto>>(db.Flights);
             return Flights;
         }
         [HttpGet("{id}")]
-        public ActionResult<flightDto> GetFlightbyId(int id)
+        public ActionResult<FlightDto> GetFlightbyId(int id)
         {
 
-            var Flight = db.Flights.FirstOrDefault(a => a.FlightId == id);
-            if (Flight != null)
+            Flight flight = db.Flights.FirstOrDefault(a => a.FlightId == id);
+            if (flight != null)
             {
-                var Flight1 = mapper.Map<flightDto>(Flight);
+                var Flight1 = mapper.Map<FlightDto>(flight);
 
                 return Flight1;
             }
@@ -55,6 +55,23 @@ namespace FlightService.Controllers
 
                 return NotFound();
             }
+        }
+        [HttpGet("{DateTime},{fromplace},{toplace},{typeoftrip}")]
+        public ActionResult<IEnumerable<FlightDto>> Getflightsbydata(DateTime startdate, string fromplace, string toplace, string typeoftrip)
+        {
+
+            var flight = db.Flights.Where(x => x.FromPlace == fromplace).ToList();
+            flight = db.Flights.Where(x => x.ToPlace == toplace).ToList();
+            flight = db.Flights.Where(x => x.TypeofTrip == typeoftrip).ToList();
+            flight = db.Flights.Where(x => x.StartDateTime.Date == startdate).ToList();
+            flight = db.Flights.Where(x => x.Status.Contains("Active")).ToList();
+            if (flight != null)
+            {
+                var flight1 = mapper.Map<List<FlightDto>>(flight);
+                return flight1;
+            }
+            return BadRequest("No Flight Available");
+
         }
 
         [HttpDelete("{id}")]
