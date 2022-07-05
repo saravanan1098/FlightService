@@ -7,6 +7,7 @@ namespace FlightService.Dto
 {
     public class FlightDto
     {
+        public int AirlineId { get; set; }
         public string FlightModel { get; set; }
         public string FromPlace { get; set; }
         public string ToPlace { get; set; }

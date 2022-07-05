@@ -56,6 +56,29 @@ namespace FlightService.Controllers
                 return NotFound();
             }
         }
+        [HttpPut("{id}")]
+        public ActionResult<Flight> UpdateFlightbyId(int id,FlightDto _flight)
+        {
+
+            Flight flight = db.Flights.FirstOrDefault(a => a.FlightId == id);
+            if (flight != null)
+            {
+                 
+                var flight1 = mapper.Map<Flight>(_flight);
+                if (db.Flights.Any(a => a.FlightId == id))
+                {
+                    db.Flights.Update(flight1);
+                    db.SaveChanges();
+                    return flight;
+                }
+                return NotFound();
+            }
+            else
+            {
+
+                return NotFound();
+            }
+        }
         [HttpGet("{DateTime},{fromplace},{toplace},{typeoftrip}")]
         public ActionResult<IEnumerable<FlightDto>> Getflightsbydata(DateTime startdate, string fromplace, string toplace, string typeoftrip)
         {
