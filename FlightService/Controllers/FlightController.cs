@@ -33,7 +33,7 @@ namespace FlightService.Controllers
             db.SaveChanges();
             return Ok();
         }
-        [HttpGet("findall")]
+        [HttpGet]
         public List<FlightDto> GetAllFlight()
         {
             var Flights = mapper.Map<List<FlightDto>>(db.Flights);
