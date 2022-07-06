@@ -55,6 +55,15 @@ namespace FlightService.Controllers
                 return NotFound();
             }
         }
+        [HttpGet("block/{id}")]
+        public ActionResult BlockFlightbyId(int id)
+        {
+
+            Airline airline = db.Airlines.FirstOrDefault(a => a.AirlineId == id);
+            airline.Status = "Bloced";
+            db.SaveChanges();
+            return Ok("Blocked");
+        }
 
         [HttpDelete("{id}")]
         public ActionResult DeleteAirlinebyId(int id)

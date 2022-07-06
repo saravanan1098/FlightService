@@ -1,3 +1,4 @@
+using common;
 using FlightService.Dto;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +30,7 @@ namespace FlightService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddConsulConfig(Configuration);
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<FlightServiceDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSwaggerGen(c =>
@@ -74,6 +76,7 @@ namespace FlightService
             app.UseHttpsRedirection();
             app.UseSwagger();
             app.UseSwaggerUI();
+            app.UseConsul(Configuration);
 
             app.UseRouting();
 

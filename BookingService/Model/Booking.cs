@@ -12,7 +12,7 @@ namespace BookingService.Model
         public int BookingId { get; set; }
         public string PassengerId { get; set; }
         public string MailId { get; set; }
-        public string PNR { get; set; }
+        public int PNR { get; set; } = new Random().Next(1000000, 9999999);
         public DateTime BookingDateTime { get; set; } = DateTime.Now;
         public int FlightNumber { get; set; }
         public int NumberofSeats { get; set; }

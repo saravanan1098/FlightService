@@ -1,4 +1,5 @@
 using BookingService.Dto;
+using common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +32,7 @@ namespace BookingService
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<BookingServiceDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddConsulConfig(Configuration);
             services.AddSwaggerGen(c =>
             {
 
@@ -70,7 +72,7 @@ namespace BookingService
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseConsul(Configuration);
             app.UseHttpsRedirection();
             app.UseSwagger();
             app.UseSwaggerUI();

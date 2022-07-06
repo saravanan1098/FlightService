@@ -20,5 +20,10 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.21.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\APIGateways\APIGateways.csproj" />
+    <ProjectReference Include="..\AppExtension\common.csproj" />
+  </ItemGroup>
+
 
 </Project>

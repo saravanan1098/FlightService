@@ -40,10 +40,32 @@ namespace BookingService.Controllers
         public ActionResult<Booking> GetBooking(int id)
         {
 
-            var booking = db.Bookings.Where(x => x.BookingId == id).FirstOrDefault();
+            Booking booking = db.Bookings.Where(x => x.BookingId == id).FirstOrDefault();
            if (booking != null)
             {
                return booking;
+            }
+            return BadRequest("No booking found");
+        }
+        [HttpGet("pnr/{pnr}")]
+        public ActionResult<Booking> GetBookingByPnr(int pnr)
+        {
+
+            Booking booking = db.Bookings.Where(x => x.PNR == pnr).FirstOrDefault();
+            if (booking != null)
+            {
+                return booking;
+            }
+            return BadRequest("No booking found");
+        }
+        [HttpGet("mail/{mailId}")]
+        public ActionResult<Booking> GetBookingByMailId(string mailId)
+        {
+
+            Booking booking = db.Bookings.Where(x => x.MailId == mailId).FirstOrDefault();
+            if (booking != null)
+            {
+                return booking;
             }
             return BadRequest("No booking found");
         }

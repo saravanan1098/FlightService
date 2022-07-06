@@ -14,7 +14,7 @@ namespace FlightService.Controllers
     [ApiController]
     public class FlightController : ControllerBase
     {
-        
+
         private FlightServiceDbContext db;
         private IMapper mapper;
 
@@ -26,14 +26,14 @@ namespace FlightService.Controllers
         [HttpPost]
         public IActionResult AddFlight(FlightDto _flight)
         {
-           
+
             Flight flight = mapper.Map<Flight>(_flight);
 
             db.Flights.Add(flight);
             db.SaveChanges();
             return Ok();
         }
-        [HttpGet]
+        [HttpGet("findall")]
         public List<FlightDto> GetAllFlight()
         {
             var Flights = mapper.Map<List<FlightDto>>(db.Flights);
@@ -56,37 +56,37 @@ namespace FlightService.Controllers
                 return NotFound();
             }
         }
-        [HttpPut("{id}")]
-        public ActionResult<Flight> UpdateFlightbyId(int id,FlightDto _flight)
+        [HttpGet("block/{id}")]
+        public ActionResult BlockFlightbyId(int id)
         {
 
             Flight flight = db.Flights.FirstOrDefault(a => a.FlightId == id);
-            if (flight != null)
+            flight.Status = "Bloced";
+            db.SaveChanges();
+            return Ok("Blocked");
+        }
+        [HttpPut("{id}")]
+        public ActionResult<Flight> UpdateFlightbyId(int id,FlightDto _flight)
+        {
+            var flight = mapper.Map<Flight>(_flight);
+           var flight1 = db.Flights.FirstOrDefault(a => a.FlightId == id);
+            if (flight1 != null)
             {
-                 
-                var flight1 = mapper.Map<Flight>(_flight);
-                if (db.Flights.Any(a => a.FlightId == id))
-                {
+                flight1 = flight;
                     db.Flights.Update(flight1);
                     db.SaveChanges();
-                    return flight;
-                }
-                return NotFound();
+                    return flight;  
             }
-            else
-            {
-
-                return NotFound();
-            }
+             return NotFound();
         }
-        [HttpGet("{DateTime},{fromplace},{toplace},{typeoftrip}")]
-        public ActionResult<IEnumerable<FlightDto>> Getflightsbydata(DateTime startdate, string fromplace, string toplace, string typeoftrip)
+        [HttpGet("{fromplace},{toplace},{typeoftrip}")]
+        public ActionResult<List<FlightDto>> Getflightsbydata( string fromplace, string toplace, string typeoftrip)
         {
 
             var flight = db.Flights.Where(x => x.FromPlace == fromplace).ToList();
             flight = db.Flights.Where(x => x.ToPlace == toplace).ToList();
             flight = db.Flights.Where(x => x.TypeofTrip == typeoftrip).ToList();
-            flight = db.Flights.Where(x => x.StartDateTime.Date == startdate).ToList();
+            //flight = db.Flights.Where(x => x.StartDateTime.Date == startdate).ToList();
             flight = db.Flights.Where(x => x.Status.Contains("Active")).ToList();
             if (flight != null)
             {

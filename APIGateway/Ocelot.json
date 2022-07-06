@@ -1,0 +1,52 @@
+{
+  "GlobalConfiguration": {
+    //"BaseUrl": "https://localhost:44334",
+    "ServiceDiscoveryProvider": {
+      "Host": "localhost",
+      "Port": "8500",
+      "Type": "Consul"
+    }
+  },
+  "Routes": [
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/flight/findall",
+      "DownstreamScheme": "https",
+      "ServiceName": "FlightService",
+      "UpstreamPathTemplate": "/api/gateway/flight/findall",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/Flight/{id}",
+      "DownstreamScheme": "https",
+      "ServiceName": "FlightService",
+      "UpstreamPathTemplate": "/api/gateway/Flight/{id}",
+      "UpstreamHttpMethod": [ "Get", "Put", "Delete" ]
+    },
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/Flight/{{DateTime},{fromplace},{toplace},{typeoftrip}",
+      "DownstreamScheme": "https",
+      "ServiceName": "FlightService",
+      "UpstreamPathTemplate": "/api/gateway/Flight/{{DateTime},{fromplace},{toplace},{typeoftrip}}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/BookingService",
+      "ServiceName": "BookingService",
+      "DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/api/gateway/BookingService",
+      "UpstreamHttpMethod": [ "Get", "Post" ]
+    },
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/BookingService/{id}",
+      "ServiceName": "BookingService",
+      "DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/api/gateway/BookingService/{id}",
+      "UpstreamHttpMethod": [ "Get", "Delete" ]
+    }
+  ]
+}

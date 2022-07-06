@@ -38,8 +38,8 @@ namespace BookingService.Migrations
                     b.Property<int>("NumberofSeats")
                         .HasColumnType("int");
 
-                    b.Property<string>("PNR")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PNR")
+                        .HasColumnType("int");
 
                     b.Property<string>("PassengerId")
                         .HasColumnType("nvarchar(max)");

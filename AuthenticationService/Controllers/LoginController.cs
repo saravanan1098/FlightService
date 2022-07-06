@@ -26,7 +26,7 @@ namespace AuthenticationService.Controllers
             db = _db;
         }
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register([FromBody] User request)
+        public  ActionResult<User> Register([FromBody] User request)
         {
             db.Users.Add(request);
             db.SaveChanges();
