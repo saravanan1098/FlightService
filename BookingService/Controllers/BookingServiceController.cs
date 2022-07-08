@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookingService.Dto;
 using BookingService.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,7 @@ namespace BookingService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="user")]
     public class BookingServiceController : ControllerBase
     {
         public BookingServiceDbContext db;
