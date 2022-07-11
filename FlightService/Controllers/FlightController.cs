@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using FlightService.Dto;
 using FlightService.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SolrNet.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +12,14 @@ using System.Threading.Tasks;
 
 namespace FlightService.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class FlightController : ControllerBase
     {
 
-        private FlightServiceDbContext db;
-        private IMapper mapper;
+        private readonly FlightServiceDbContext db;
+        private readonly IMapper mapper;
 
         public FlightController(FlightServiceDbContext _db, IMapper _mapper)
         {

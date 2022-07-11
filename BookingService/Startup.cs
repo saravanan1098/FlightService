@@ -1,5 +1,7 @@
 using BookingService.Dto;
+using BookingService.RabbitMQConsumer;
 using common;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +35,43 @@ namespace BookingService
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<BookingServiceDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddConsulConfig(Configuration);
+            services.AddMassTransit(x =>
+            {
+
+                x.AddConsumer<FlightConsumer>();
+                x.AddConsumer<AirlineConsumer>();
+                x.AddConsumer<SeatnumberConsumer>();
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(new Uri("rabbitmq://localhost/"), h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+                    cfg.ReceiveEndpoint("FlightQueue", ep =>
+                    {
+                        ep.PrefetchCount = 16;
+                        ep.UseMessageRetry(r => r.Interval(2, 100));
+                        ep.ConfigureConsumer<FlightConsumer>(context);
+                    });
+                    cfg.ReceiveEndpoint("AirlineQueue", ep =>
+                    {
+                        ep.PrefetchCount = 16;
+                        ep.UseMessageRetry(r => r.Interval(2, 100));
+                        ep.ConfigureConsumer<AirlineConsumer>(context);
+                    });
+                    cfg.ReceiveEndpoint("SeatNumberQueue", ep =>
+                    {
+                        ep.PrefetchCount = 16;
+                        ep.UseMessageRetry(r => r.Interval(2, 100));
+                        ep.ConfigureConsumer<SeatnumberConsumer>(context);
+                    });
+
+                });
+            });
+
+            services.AddMassTransitHostedService(true);
+
             services.AddSwaggerGen(c =>
             {
 
