@@ -6,7 +6,7 @@ using BookingService.Dto;
 using System.Threading.Tasks;
 using System;
 
-namespace BookingService.SeatnumberConsumer
+namespace BookingService.RabbitMQConsumer
 {
     public class SeatnumberConsumer : IConsumer<Seatnumber_Shared>
     {

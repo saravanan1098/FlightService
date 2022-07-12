@@ -36,12 +36,12 @@ namespace AuthenticationService
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer=Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt: Audience"],
+                        //ValidIssuer=Configuration["Jwt:Issuer"],
+                        //ValidAudience = Configuration["Jwt: Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
                 });
@@ -77,6 +77,7 @@ namespace AuthenticationService
 
                 });
             });
+            services.AddAuthorization();
             
         }
 
@@ -90,14 +91,9 @@ namespace AuthenticationService
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseHttpsRedirection();
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

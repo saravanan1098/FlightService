@@ -8,7 +8,7 @@ using BookingService.Dto;
 using System;
 
 
-namespace BookingService.AirlineConsumer
+namespace BookingService.RabbitMQConsumer
 {
     public class AirlineConsumer : IConsumer<Airline_Shared>
     {
