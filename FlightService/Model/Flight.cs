@@ -10,7 +10,7 @@ namespace FlightService.Model
     {
         [Key]
         public int FlightId { get; set; }
-        public string FlightModel { get; set; }
+        public string FlightNumber { get; set; }
         public string FromPlace { get; set; }
         public string ToPlace { get; set; }
         public DateTime StartDateTime { get; set; }
@@ -20,8 +20,8 @@ namespace FlightService.Model
         public int NonBusinessClassSeats { get; set; }
         public string MealType { get; set; }
         public string TypeofTrip { get; set; }
-        public int OnewayTicketCost { get; set; }
-        public int RoundTripTicketCost { get; set; }
+        public int BusinessClassSeatTicketCost { get; set; }
+        public int NonBusinessClassSeatTicketCost { get; set; }
         public string Status { get; set; } = "Active";
         public int AirlineId { get; set; }
         public Airline Airline { get; set; }

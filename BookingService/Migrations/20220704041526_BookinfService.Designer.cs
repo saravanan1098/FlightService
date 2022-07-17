@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookingService.Migrations
 {
-    [DbContext(typeof(BookingServiceDbContext))]
+    [DbContext(typeof(BookingDbContext))]
     [Migration("20220704041526_BookinfService")]
     partial class BookinfService
     {

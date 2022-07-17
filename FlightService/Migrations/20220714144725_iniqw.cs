@@ -2,7 +2,7 @@
 
 namespace FlightService.Migrations
 {
-    public partial class airlineId : Migration
+    public partial class iniqw : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

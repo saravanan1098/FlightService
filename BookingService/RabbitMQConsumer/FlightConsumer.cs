@@ -1,40 +1,62 @@
 ﻿using AutoMapper;
 using BookingService.Dto;
 using MassTransit;
-using common;
+
 using System.Threading.Tasks;
 using BookingService.Model;
 using System;
+using System.Linq;
+using common;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookingService.RabbitMQConsumer
 {
     public class FlightConsumer : IConsumer<Flight_Shared>
     {
-        private readonly BookingServiceDbContext _db;
-        private readonly IMapper _mapper;
-        public FlightConsumer(BookingServiceDbContext db, IMapper mapper)
+        private readonly BookingDbContext db;
+        private readonly IMapper mapper;
+        public FlightConsumer(BookingDbContext _db, IMapper _mapper)
         {
-            _db = db;
-            _mapper = mapper;
+            db = _db;
+            mapper = _mapper;
         }
-
         public async Task Consume(ConsumeContext<Flight_Shared> context)
         {
             try
             {
                 var flight_shared = context.Message;
-
-
-                //foreach (var seatnumber_Shared in flight_shared.Seatnumbers_Shared)
-                //{
-                //    Seatnumber seatnumber = new Seatnumber();
-                //    seatnumber = _mapper.Map<Seatnumber>(seatnumber_Shared);
-                //    _db.Seatnumbers.Add(seatnumber);
-                //}
-
                 Flight flight = new Flight();
-                flight = _mapper.Map<Flight>(flight_shared);
-                _db.Flights.Add(flight);
+                flight = mapper.Map<Flight>(flight_shared);
+                await db.Flights.AddAsync(flight);
+                await db.SaveChangesAsync();
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+    }
+    public class FlightdeleteConsumer : IConsumer<Id>
+    {
+        private readonly BookingDbContext _db;
+        private readonly IMapper _mapper;
+        public FlightdeleteConsumer(BookingDbContext db, IMapper mapper)
+        {
+            _db = db;
+            _mapper = mapper;
+        }
+
+        public async Task Consume(ConsumeContext<Id> context)
+        {
+            try
+            {
+                var id = context.Message;
+                int flightid = id.TransferId;
+                Flight flight = _db.Flights.Where(x => x.FlightId == flightid).FirstOrDefault();
+
+                _db.Flights.Remove(flight);
                 await _db.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -44,5 +66,6 @@ namespace BookingService.RabbitMQConsumer
 
         }
     }
+
 
 }

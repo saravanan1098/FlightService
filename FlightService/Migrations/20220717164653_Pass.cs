@@ -2,7 +2,7 @@
 
 namespace FlightService.Migrations
 {
-    public partial class rabbit : Migration
+    public partial class Pass : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

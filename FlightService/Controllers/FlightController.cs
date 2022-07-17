@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using common;
 using FlightService.Dto;
 using FlightService.Model;
+using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SolrNet.Utils;
 using System;
 using System.Collections.Generic;
@@ -12,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace FlightService.Controllers
 {
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class FlightController : ControllerBase
@@ -20,65 +23,95 @@ namespace FlightService.Controllers
 
         private readonly FlightServiceDbContext db;
         private readonly IMapper mapper;
+        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBusControl _bus;
 
-        public FlightController(FlightServiceDbContext _db, IMapper _mapper)
+        public FlightController(FlightServiceDbContext _db, IMapper _mapper, IPublishEndpoint publishEndpoint, IBusControl busControl)
         {
             db = _db;
             mapper = _mapper;
+            _publishEndpoint = publishEndpoint;
+            _bus = busControl;
         }
-        [HttpPost]
-        public IActionResult AddFlight(FlightDto _flight)
+        [HttpPost("add")]
+        public async Task<IActionResult> AddFlight(FlightDto _flight)
         {
-
-            Flight flight = mapper.Map<Flight>(_flight);
+            Flight flight = new Flight();
+            flight = mapper.Map<Flight>(_flight);
 
             db.Flights.Add(flight);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
+            await _publishEndpoint.Publish<Flight_Shared>(flight);
+            Uri uri = new Uri("rabbitmq://localhost/FlightQueue");
+            var endPoint = await _bus.GetSendEndpoint(uri);
+            await endPoint.Send(flight);
             return Ok();
         }
         [HttpGet]
-        public List<FlightDto> GetAllFlight()
+        public List<Flight> GetAllFlight()
         {
-            var Flights = mapper.Map<List<FlightDto>>(db.Flights);
+            var Flights = mapper.Map<List<Flight>>(db.Flights);
             return Flights;
         }
         [HttpGet("{id}")]
-        public ActionResult<FlightDto> GetFlightbyId(int id)
+        public ActionResult<Flight> GetFlightbyId(int id)
         {
 
-            Flight flight = db.Flights.FirstOrDefault(a => a.FlightId == id);
-            if (flight != null)
-            {
-                var Flight1 = mapper.Map<FlightDto>(flight);
+            return  db.Flights.FirstOrDefault(a => a.FlightId == id);
+            //if (flight != null)
+            //{
+            //    var Flight1 = mapper.Map<Flight>(flight);
 
-                return Flight1;
-            }
-            else
-            {
+            //    return Flight1;
+            //}
+            //else
+            //{
 
-                return NotFound();
-            }
+            //    return NotFound();
+            //}
         }
         [HttpGet("block/{id}")]
         public ActionResult BlockFlightbyId(int id)
         {
 
             Flight flight = db.Flights.FirstOrDefault(a => a.FlightId == id);
-            flight.Status = "Bloced";
+            flight.Status = "Blocked";
             db.SaveChanges();
             return Ok("Blocked");
         }
         [HttpPut("{id}")]
-        public ActionResult<Flight> UpdateFlightbyId(int id,FlightDto _flight)
+        public async Task<ActionResult<Flight>> UpdateFlightbyId(int id,FlightDto flightDto)
         {
-            var flight = mapper.Map<Flight>(_flight);
+            
            var flight1 = db.Flights.FirstOrDefault(a => a.FlightId == id);
             if (flight1 != null)
             {
-                flight1 = flight;
-                    db.Flights.Update(flight1);
-                    db.SaveChanges();
-                    return flight;  
+                Flight flight = await db.Flights.Where(x => x.FlightId == id).FirstOrDefaultAsync();
+
+                flight.AirlineId = flightDto.AirlineId;
+                flight.FlightNumber = flightDto.FlightNumber;
+                flight.FromPlace = flightDto.FromPlace;
+                flight.ToPlace = flightDto.ToPlace;
+                flight.StartDateTime = flightDto.StartDateTime;
+                flight.EndDateTime = flightDto.EndDateTime;
+                flight.ScheduledDays = flightDto.ScheduledDays;   
+                flight.BusinessClassSeats = flightDto.BusinessClassSeats;
+                flight.NonBusinessClassSeats = flightDto.NonBusinessClassSeats;
+                flight.MealType = flightDto.MealType;
+                flight.TypeofTrip = flightDto.TypeofTrip;
+                flight.BusinessClassSeatTicketCost = flightDto.BusinessClassSeatTicketCost;
+                flight.NonBusinessClassSeatTicketCost = flightDto.NonBusinessClassSeatTicketCost;
+
+                db.Flights.Update(flight);
+                await db.SaveChangesAsync();
+
+                await _publishEndpoint.Publish<Flight_Shared>(flight);
+                Uri uri = new Uri("rabbitmq://localhost/FlightQueue");
+                var endPoint = await _bus.GetSendEndpoint(uri);
+                await endPoint.Send(flight);
+
+
+                return flight;
             }
              return NotFound();
         }
@@ -101,16 +134,25 @@ namespace FlightService.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteFlightbyId(int id)
+        public async Task<ActionResult<bool>> DeleteFlightbyId(int id)
         {
             if (db.Flights.Any(X => X.FlightId == id))
             {
                 var data = db.Flights.Where(X => X.FlightId == id).FirstOrDefault();
                 db.Flights.Remove(data);
                 db.SaveChanges();
-                return Ok("Flight Deleted");
+
+                Id transferid = new Id();
+                transferid.TransferId = id;
+
+                await _publishEndpoint.Publish<Id>(transferid);
+                Uri uri = new Uri("rabbitmq://localhost/FlightdeleteQueue");
+                var endPoint = await _bus.GetSendEndpoint(uri);
+                await endPoint.Send(transferid);
+
+                return true;
             }
-            return BadRequest("Flight not Exist");
+            return false;
         }
     }
 }

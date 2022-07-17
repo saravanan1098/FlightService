@@ -10,11 +10,11 @@ namespace BookingService.Model
     {
         [Key]
         public int BookingId { get; set; }
-        public string PassengerId { get; set; }
+        public string BookingName { get; set; }
         public string MailId { get; set; }
         public int PNR { get; set; } = new Random().Next(1000000, 9999999);
         public DateTime BookingDateTime { get; set; } = DateTime.Now;
-        public int FlightNumber { get; set; }
+        public string FlightNumber { get; set; }
         public int NumberofSeats { get; set; }
         public int TotalCost { get; set; }
         public string Status { get; set; } = "Active";

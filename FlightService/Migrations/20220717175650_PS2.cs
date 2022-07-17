@@ -2,7 +2,7 @@
 
 namespace FlightService.Migrations
 {
-    public partial class initial : Migration
+    public partial class PS2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace FlightService.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-              
+
         }
     }
 }

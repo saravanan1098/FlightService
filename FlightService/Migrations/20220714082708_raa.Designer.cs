@@ -4,14 +4,16 @@ using FlightService.Dto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlightService.Migrations
 {
     [DbContext(typeof(FlightServiceDbContext))]
-    partial class FlightServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220714082708_raa")]
+    partial class raa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,7 +139,7 @@ namespace FlightService.Migrations
             modelBuilder.Entity("FlightService.Model.Flight", b =>
                 {
                     b.HasOne("FlightService.Model.Airline", "Airline")
-                        .WithMany("Flights")
+                        .WithMany("FLights")
                         .HasForeignKey("AirlineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -14,7 +14,7 @@ namespace BookingService.Model
         public int age { get; set; }
         public string Gender { get; set; }
         public string MealType { get; set; }
-        public int SeatNumber { get; set; }
+        public string SeatNumber { get; set; }
         public int BookingId { get; set; }
         public Booking Booking { get; set; }
 

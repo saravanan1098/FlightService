@@ -8,21 +8,21 @@ using System.Threading.Tasks;
 
 namespace BookingService.Dto
 {
-    public class MappingConfig
+    public class MappingConfig:Profile
     {
-            public static MapperConfiguration RegisterMaps()
+        
+        public MappingConfig()
         {
-            var mappingConfig = new MapperConfiguration(config =>
-            {
 
-            config.CreateMap<Passenger, PassengerDto>().ReverseMap();
-            config.CreateMap<Booking, BookingDto>().ReverseMap();
-            config.CreateMap<Airline, Airline_Shared>().ReverseMap();
-            config.CreateMap<Flight, Flight_Shared>().ReverseMap();
-            config.CreateMap<Seatnumber, Seatnumber_Shared>().ReverseMap();
-            });
+            CreateMap<Passenger, PassengerDto>().ReverseMap();
+            CreateMap<Booking, BookingDto>().ReverseMap();
+            CreateMap<Airline, Airline_Shared>().ReverseMap();
+            CreateMap<Flight, Flight_Shared>().ReverseMap();
+            CreateMap<Seatnumber, Seatnumber_Shared>().ReverseMap();
+            CreateMap<Flight, flightDto>().ReverseMap();
 
-                return mappingConfig;
+
         }
+
     }
 }

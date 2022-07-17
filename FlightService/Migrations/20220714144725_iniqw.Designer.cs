@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlightService.Migrations
 {
     [DbContext(typeof(FlightServiceDbContext))]
-    [Migration("20220703150351_airline")]
-    partial class airline
+    [Migration("20220714144725_iniqw")]
+    partial class iniqw
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,6 +40,12 @@ namespace FlightService.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("LastUpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
@@ -58,13 +64,16 @@ namespace FlightService.Migrations
                     b.Property<int>("AirlineId")
                         .HasColumnType("int");
 
+                    b.Property<int>("BusinessClassSeatTicketCost")
+                        .HasColumnType("int");
+
                     b.Property<int>("BusinessClassSeats")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FlightModel")
+                    b.Property<string>("FlightNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FromPlace")
@@ -73,13 +82,10 @@ namespace FlightService.Migrations
                     b.Property<string>("MealType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("NonBusinessClassSeatTicketCost")
+                        .HasColumnType("int");
+
                     b.Property<int>("NonBusinessClassSeats")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OnewayTicketCost")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoundTripTicketCost")
                         .HasColumnType("int");
 
                     b.Property<string>("ScheduledDays")
@@ -133,7 +139,7 @@ namespace FlightService.Migrations
             modelBuilder.Entity("FlightService.Model.Flight", b =>
                 {
                     b.HasOne("FlightService.Model.Airline", "Airline")
-                        .WithMany("FLights")
+                        .WithMany("Flights")
                         .HasForeignKey("AirlineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

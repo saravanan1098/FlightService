@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookingService.Migrations
 {
-    [DbContext(typeof(BookingServiceDbContext))]
+    [DbContext(typeof(BookingDbContext))]
     partial class BookingServiceDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -36,6 +36,12 @@ namespace BookingService.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("LastUpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
@@ -54,8 +60,11 @@ namespace BookingService.Migrations
                     b.Property<DateTime>("BookingDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FlightNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("BookingName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FlightNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MailId")
                         .HasColumnType("nvarchar(max)");
@@ -65,9 +74,6 @@ namespace BookingService.Migrations
 
                     b.Property<int>("PNR")
                         .HasColumnType("int");
-
-                    b.Property<string>("PassengerId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
@@ -88,13 +94,16 @@ namespace BookingService.Migrations
                     b.Property<int>("AirlineId")
                         .HasColumnType("int");
 
+                    b.Property<int>("BusinessClassSeatTicketCost")
+                        .HasColumnType("int");
+
                     b.Property<int>("BusinessClassSeats")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FlightModel")
+                    b.Property<string>("FlightNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FromPlace")
@@ -103,13 +112,10 @@ namespace BookingService.Migrations
                     b.Property<string>("MealType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("NonBusinessClassSeatTicketCost")
+                        .HasColumnType("int");
+
                     b.Property<int>("NonBusinessClassSeats")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OnewayTicketCost")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoundTripTicketCost")
                         .HasColumnType("int");
 
                     b.Property<string>("ScheduledDays")
@@ -153,8 +159,8 @@ namespace BookingService.Migrations
                     b.Property<string>("PassengerName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SeatNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("SeatNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("age")
                         .HasColumnType("int");
@@ -193,7 +199,7 @@ namespace BookingService.Migrations
             modelBuilder.Entity("BookingService.Model.Flight", b =>
                 {
                     b.HasOne("BookingService.Model.Airline", "Airline")
-                        .WithMany("FLights")
+                        .WithMany("Flights")
                         .HasForeignKey("AirlineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

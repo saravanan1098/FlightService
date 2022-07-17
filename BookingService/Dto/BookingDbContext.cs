@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BookingService.Dto
 {
-    public class BookingServiceDbContext:DbContext
+    public class BookingDbContext:DbContext
     {
-        public BookingServiceDbContext(DbContextOptions<BookingServiceDbContext> options):base(options)
+        public BookingDbContext(DbContextOptions<BookingDbContext> options):base(options)
         {
 
         }
@@ -18,6 +18,7 @@ namespace BookingService.Dto
         public DbSet<Airline> Airlines { get; set; }
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Seatnumber> Seatnumbers { get; set; }
+        //public DbSet<Discount> Discounts { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

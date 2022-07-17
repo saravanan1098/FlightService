@@ -38,7 +38,7 @@ namespace BookingService
         {
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
-            services.AddDbContext<BookingServiceDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<BookingDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -57,7 +57,13 @@ namespace BookingService
             {
 
                 x.AddConsumer<FlightConsumer>();
+                x.AddConsumer<FlightdeleteConsumer>();
+                //x.AddConsumer<DiscountConsumer>();
+                //x.AddConsumer<DiscountdeleteConsumer>();
                 x.AddConsumer<AirlineConsumer>();
+                x.AddConsumer<AirlineblockConsumer>();
+                x.AddConsumer<AirlinelogoConsumer>();
+                x.AddConsumer<AirlineunblockConsumer>();
                 x.AddConsumer<SeatnumberConsumer>();
                 x.UsingRabbitMq((context, cfg) =>
                 {
@@ -66,17 +72,43 @@ namespace BookingService
                         h.Username("guest");
                         h.Password("guest");
                     });
-                    cfg.ReceiveEndpoint("FlightQueue", ep =>
-                    {
-                        ep.PrefetchCount = 16;
-                        ep.UseMessageRetry(r => r.Interval(2, 100));
-                        ep.ConfigureConsumer<FlightConsumer>(context);
-                    });
+                    
                     cfg.ReceiveEndpoint("AirlineQueue", ep =>
                     {
                         ep.PrefetchCount = 16;
                         ep.UseMessageRetry(r => r.Interval(2, 100));
                         ep.ConfigureConsumer<AirlineConsumer>(context);
+                    });
+                    cfg.ReceiveEndpoint("FlightdeleteQueue", ep =>
+                    {
+                        ep.PrefetchCount = 16;
+                        ep.UseMessageRetry(r => r.Interval(2, 100));
+                        ep.ConfigureConsumer<FlightdeleteConsumer>(context);
+                    });
+                   
+                    cfg.ReceiveEndpoint("AirlineblockQueue", ep =>
+                    {
+                        ep.PrefetchCount = 16;
+                        ep.UseMessageRetry(r => r.Interval(2, 100));
+                        ep.ConfigureConsumer<AirlineblockConsumer>(context);
+                    });
+                    cfg.ReceiveEndpoint("AirlineunblockQueue", ep =>
+                    {
+                        ep.PrefetchCount = 16;
+                        ep.UseMessageRetry(r => r.Interval(2, 100));
+                        ep.ConfigureConsumer<AirlineunblockConsumer>(context);
+                    });
+                    cfg.ReceiveEndpoint("AirlinelogoQueue", ep =>
+                    {
+                        ep.PrefetchCount = 16;
+                        ep.UseMessageRetry(r => r.Interval(2, 100));
+                        ep.ConfigureConsumer<AirlinelogoConsumer>(context);
+                    });
+                    cfg.ReceiveEndpoint("FlightQueue", ep =>
+                    {
+                        ep.PrefetchCount = 16;
+                        ep.UseMessageRetry(r => r.Interval(2, 100));
+                        ep.ConfigureConsumer<FlightConsumer>(context);
                     });
                     cfg.ReceiveEndpoint("SeatNumberQueue", ep =>
                     {

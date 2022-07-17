@@ -10,9 +10,9 @@ namespace BookingService.RabbitMQConsumer
 {
     public class SeatnumberConsumer : IConsumer<Seatnumber_Shared>
     {
-        private readonly BookingServiceDbContext _db;
+        private readonly BookingDbContext _db;
         private readonly IMapper _mapper;
-        public SeatnumberConsumer(BookingServiceDbContext db, IMapper mapper)
+        public SeatnumberConsumer(BookingDbContext db, IMapper mapper)
         {
             _db = db;
             _mapper = mapper;
