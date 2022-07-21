@@ -33,6 +33,7 @@ namespace FlightService.Controllers
             _publishEndpoint = publishEndpoint;
             _bus = busControl;
         }
+        [Authorize(Roles = "admin")]
         [HttpPost("add")]
         public async Task<IActionResult> AddFlight(FlightDto _flight)
         {
@@ -70,6 +71,7 @@ namespace FlightService.Controllers
             //    return NotFound();
             //}
         }
+        [Authorize(Roles = "admin")]
         [HttpGet("block/{id}")]
         public ActionResult BlockFlightbyId(int id)
         {
@@ -79,6 +81,7 @@ namespace FlightService.Controllers
             db.SaveChanges();
             return Ok("Blocked");
         }
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<Flight>> UpdateFlightbyId(int id,FlightDto flightDto)
         {
@@ -115,24 +118,24 @@ namespace FlightService.Controllers
             }
              return NotFound();
         }
-        [HttpGet("{fromplace},{toplace},{typeoftrip}")]
-        public ActionResult<List<FlightDto>> Getflightsbydata( string fromplace, string toplace, string typeoftrip)
-        {
+        //[HttpGet("{fromplace},{toplace},{typeoftrip}")]
+        //public ActionResult<List<FlightDto>> Getflightsbydata( string fromplace, string toplace, string typeoftrip)
+        //{
 
-            var flight = db.Flights.Where(x => x.FromPlace == fromplace).ToList();
-            flight = db.Flights.Where(x => x.ToPlace == toplace).ToList();
-            flight = db.Flights.Where(x => x.TypeofTrip == typeoftrip).ToList();
-            //flight = db.Flights.Where(x => x.StartDateTime.Date == startdate).ToList();
-            flight = db.Flights.Where(x => x.Status.Contains("Active")).ToList();
-            if (flight != null)
-            {
-                var flight1 = mapper.Map<List<FlightDto>>(flight);
-                return flight1;
-            }
-            return BadRequest("No Flight Available");
+        //    var flight = db.Flights.Where(x => x.FromPlace == fromplace).ToList();
+        //    flight = db.Flights.Where(x => x.ToPlace == toplace).ToList();
+        //    flight = db.Flights.Where(x => x.TypeofTrip == typeoftrip).ToList();
+        //    //flight = db.Flights.Where(x => x.StartDateTime.Date == startdate).ToList();
+        //    flight = db.Flights.Where(x => x.Status.Contains("Active")).ToList();
+        //    if (flight != null)
+        //    {
+        //        var flight1 = mapper.Map<List<FlightDto>>(flight);
+        //        return flight1;
+        //    }
+        //    return BadRequest("No Flight Available");
 
-        }
-
+        //}
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteFlightbyId(int id)
         {

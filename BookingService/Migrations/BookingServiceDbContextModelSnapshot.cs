@@ -156,7 +156,7 @@ namespace BookingService.Migrations
                     b.Property<string>("MealType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PassengerName")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SeatNumber")

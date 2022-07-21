@@ -10,7 +10,7 @@ namespace BookingService.Model
     {
         [Key]
         public int PassengerId { get; set; }
-        public string PassengerName { get; set; }
+        public string Name { get; set; }
         public int age { get; set; }
         public string Gender { get; set; }
         public string MealType { get; set; }

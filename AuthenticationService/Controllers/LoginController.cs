@@ -34,13 +34,18 @@ namespace AuthenticationService.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login([FromBody] UserDto userLogin)
+        public async Task<ActionResult<Responsemodel>> Login([FromBody] UserDto userLogin)
         {
             var user = Authenticate(userLogin);
             if(user!=null)
             {
                 var token = Generate(user);
-                return Ok(token);
+                Responsemodel responsemodel = new Responsemodel();
+                responsemodel.Username = user.Username;
+                responsemodel.Role = user.Role;
+                responsemodel.MailId = user.EmailAddress;
+                responsemodel.Token = token;
+                return responsemodel;
             }
             return NotFound("User not found");
         }

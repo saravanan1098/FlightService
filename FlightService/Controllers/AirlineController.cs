@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace FlightService.Controllers
 {
-    //[Authorize(Roles ="admin")]
+    [Authorize(Roles ="admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AirlineController : ControllerBase
@@ -32,6 +32,7 @@ namespace FlightService.Controllers
             bus = _bus;
             publishEndpoint = _publishEndpoint;
         }
+
         [HttpPost("add")]
         public async Task<IActionResult> AddAirline(AirlineDto airlinedto)
         {

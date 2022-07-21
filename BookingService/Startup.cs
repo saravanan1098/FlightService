@@ -1,6 +1,8 @@
 using BookingService.Dto;
 using BookingService.RabbitMQConsumer;
 using common;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using GreenPipes;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -119,8 +121,12 @@ namespace BookingService
 
                 });
             });
-
+            services.AddSingleton(typeof(IConverter),new SynchronizedConverter(new PdfTools()));
             services.AddMassTransitHostedService(true);
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 
             services.AddSwaggerGen(c =>
             {

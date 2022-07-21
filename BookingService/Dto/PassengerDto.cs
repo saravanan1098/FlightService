@@ -8,11 +8,11 @@ namespace BookingService.Dto
     public class PassengerDto
     {
        
-        public string PassengerName { get; set; }
+        public string Name { get; set; }
         public int age { get; set; }
         public string Gender { get; set; }
         public string MealType { get; set; }
-        public string SeatNumber { get; set; }
+        //public string SeatNumber { get; set; }
         
     }
 }
