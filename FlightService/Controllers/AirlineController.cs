@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace FlightService.Controllers
 {
-    [Authorize(Roles ="admin")]
+    //[Authorize(Roles ="admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AirlineController : ControllerBase

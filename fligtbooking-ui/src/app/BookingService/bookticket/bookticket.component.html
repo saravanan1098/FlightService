@@ -1,0 +1,227 @@
+<<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+  integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+    crossorigin="anonymous"></script>
+
+
+
+
+  <div class="page-header">
+    <div class="container">
+      <h1>Book Ticket</h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row end-xs top-row">
+      <div class="col-xs-1 row end-xs">
+        <a routerLink="/searchall" color="primary" mat-raised-button>
+          <mat-icon>chevron_left</mat-icon>
+          Go Back
+        </a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-4">
+        <form #flighttDetailsForm="ngForm">
+          <h1>Flight Details</h1>
+          <div class="row">
+            <div class="col-xs-6">
+              <mat-form-field appearance="standard">
+                <mat-label>Airline Name</mat-label>
+                <input type="text" [readonly]="true" matInput [(ngModel)]="flight.airlineName" name="airlineName">
+              </mat-form-field>
+            </div>
+            <div class="col-xs-6">
+              <mat-form-field appearance="standard">
+                <mat-label>Flight Number</mat-label>
+                <input type="text" [readonly]="true" matInput [(ngModel)]="flight.flightNumber" name="flightNumber">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-6">
+              <mat-form-field appearance="standard">
+                <mat-label>From Place</mat-label>
+                <input type="text" [readonly]="true" matInput [(ngModel)]="flight.fromPlace" name="fromPlace">
+              </mat-form-field>
+            </div>
+            <div class="col-xs-6">
+              <mat-form-field appearance="standard">
+                <mat-label>To Place</mat-label>
+                <input type="text" [readonly]="true" matInput [(ngModel)]="flight.toPlace" name="toPlace">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- <div class="row">
+                <div class="col-xs-6">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Start Date</mat-label>
+                        <input type="text" [readonly]="true"  matInput [(ngModel)]="flight.startDateTime" name="startDateTime" >
+                    </mat-form-field>
+                </div>
+                <div class="col-xs-6">
+                    <mat-form-field appearance="standard">
+                        <mat-label>End Date</mat-label>
+                        <input type="text" [readonly]="true" matInput [(ngModel)]="flight.endDateTime" name="endDateTime">
+                    </mat-form-field>
+                </div>
+            </div>  -->
+
+
+
+          <div class="row">
+            <div class="col-xs-6">
+              <mat-form-field appearance="standard">
+                <mat-label>Type of Trip</mat-label>
+                <input type="text" [readonly]="true" matInput [(ngModel)]="flight.typeofTrip" name="typeofTrip">
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-xs-6">
+              <mat-form-field appearance="standard">
+                <mat-label>Instrument Used</mat-label>
+                <input type="text" [readonly]="true" matInput [(ngModel)]="flight.instrumentUsed" name="instrumentUsed">
+              </mat-form-field>
+            </div> -->
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-xs-6">
+              <mat-form-field appearance="standard" floatLabel="always">
+                <mat-label>BusinessClass Seat TicketCost</mat-label>
+                <input [readonly]="true" matInput [(ngModel)]="flight.businessClassSeatTicketCost"
+                  name="businessClassSeatTicketCost" type="number" class="example-right-align" placeholder="0">
+                <span matPrefix>₹&nbsp;</span>
+                <span matSuffix>.00</span>
+              </mat-form-field>
+            </div>
+            <div class="col-xs-6">
+              <mat-form-field appearance="standard" floatLabel="always">
+                <mat-label>Non-BusinessClass Seat TicketCost</mat-label>
+                <input [readonly]="true" matInput [(ngModel)]="flight.nonBusinessClassSeatTicketCost"
+                  name="nonBusinessClassSeatTicketCost" type="number" class="example-right-align" placeholder="0">
+                <span matPrefix>₹&nbsp;</span>
+                <span matSuffix>.00</span>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-6">
+              <mat-form-field appearance="standard">
+                <mat-label>Meal Type</mat-label>
+                <input type="text" [readonly]="true" matInput [(ngModel)]="flight.mealType" name="mealType">
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-xs-6">
+                    <mat-card><b>Start DateTime:</b> {{flight.startDateTime|date:'dd-mm-yyyy hh-mm'}}<br>
+                        <b>End DateTime:</b> {{flight.endDateTime|date:'dd-mm-yyyy hh-mm'}}
+                    </mat-card>
+                </div> -->
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="row between-xs">
+                <!-- <button mat-raised-button color="primary" (click)="onAdd()">Add</button> -->
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-xs-8">
+        <h1>Booking Details</h1>
+        <form #BookingDetailsForm="ngForm" [formGroup]="bookingForm">
+          <!-- <div class="row">
+            <div class="col-xs-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Booking Name</mat-label>
+                <input type="text" matInput name="bookingName" formControlName="bookingName">
+              </mat-form-field>
+            </div>
+          </div> -->
+          <div class="row">
+
+            <!-- <div class="col-xs-4">
+                    <mat-label>Discount Code</mat-label>
+                    <select class="form-control" formControlName="discountcode">
+                        <option *ngFor="let item of discounts;">{{item.discountcode}}</option>
+                    </select>
+                </div> -->
+
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <table class="table table-bordered" formArrayName="passengerDtos">
+                <tr>
+                  <th colspan="2">Add Passengers:</th>
+                  <th width="200px"><button type="button" mat-raised-button color="primary" (click)="addPassenger()"
+                      class="btn btn-primary">Add Passenger</button></th>
+                </tr>
+                <tr *ngFor="let Passenger of passengerDtos().controls; let i=index" [formGroupName]="i">
+                  <td>
+                    Passenger Name :
+                    <input type="text" formControlName="name" class="form-control">
+
+                  </td>
+                  <td>
+                    Age:
+                    <input type="number" formControlName="age" class="form-control">
+                  </td>
+                  <td>
+                    Gender:
+                    <select class="form-control" formControlName="gender">
+                      <option>Male</option>
+                      <option>Female</option>
+                      <option>Other</option>
+                    </select>
+                  </td>
+                  <td>
+                    Meal Type:
+                    <select class="form-control" formControlName="mealType">
+                      <option>Veg</option>
+                      <option>Non-Veg</option>
+                      <option>Both</option>
+                    </select>
+
+                  </td>
+                  <!-- <td>
+                    Seat Number:
+                    <select class="form-control" formControlName="seatNumber">
+                      <option *ngFor="let item of flight.seatnumbers;">{{item.seatNumber}}</option>
+                    </select>
+                  </td> -->
+
+                  <td>
+                    <button mat-raised-button color="warn" (click)="removePassenger(i)"
+                      class="btn btn-danger">Remove</button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="row center-xs">
+            <div class="col-xs-3 row center-xs">
+              <div class="row between-xs">
+                <!-- <button mat-raised-button color="primary" type="submit" class="btn btn-success">Submit</button> -->
+                <button mat-raised-button color="accent" (click)="onBook()">Book Ticket</button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+
+    </div>
+
+
+  </div>

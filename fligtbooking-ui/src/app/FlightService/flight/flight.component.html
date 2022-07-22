@@ -1,0 +1,72 @@
+<div class="page-header">
+  <div class="container">
+    <h1>Flights</h1>
+  </div>
+</div>
+<div class="container">
+  <div class="row end-xs mt-1">
+
+    <div class="col-xs-12">
+
+        <input type="text" class="searh-input" placeholder="Search Flights" [(ngModel)]="filterString"
+            (keyup)="filterFlights()">
+        <a routerLink="/getflight/add" mat-raised-button color="primary" class="ml-1">Add New Flight</a>
+   </div>
+</div>
+  <div class="mt-1 mat-elevation-z8">
+    <table mat-table matSort [dataSource]="dataSource" class="">
+      <ng-container matColumnDef="airlineId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Airline ID</th>
+        <td mat-cell *matCellDef="let element"> {{element.airlineId}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="flightNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Flight Number</th>
+        <td mat-cell *matCellDef="let element"> {{element.flightNumber}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fromPlace">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>From Place</th>
+        <td mat-cell *matCellDef="let element"> {{element.fromPlace}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="toPlace">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>To Place</th>
+        <td mat-cell *matCellDef="let element"> {{element.toPlace}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="startDateTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Start DateTime</th>
+        <td mat-cell *matCellDef="let element"> {{element.startDateTime | date:'dd-MM-yyyy hh-mm'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="endDateTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>End DateTime</th>
+        <td mat-cell *matCellDef="let element"> {{element.endDateTime | date:'dd-MM-yyyy hh-mm'}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="businessClassSeats">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Businesslass Seats</th>
+        <td mat-cell *matCellDef="let element"> {{element.businessClassSeats}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nonBusinessClassSeats">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Non BusinessClass Seats</th>
+        <td mat-cell *matCellDef="let element"> {{element.nonBusinessClassSeats}} </td>
+      </ng-container>
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element">
+          <a [routerLink]="['/getflight', element.flightId]">
+            <mat-icon color="primary">edit</mat-icon>
+          </a>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5,10,25,100]" aria-label="Select page">
+    </mat-paginator>
+  </div>
+</div>

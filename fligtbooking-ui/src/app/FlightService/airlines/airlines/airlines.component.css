@@ -1,0 +1,24 @@
+table {
+  width: 100%;
+  overflow-x: scroll;
+}
+
+.searh-input {
+  outline: none;
+  border: 1px solid #CCC;
+  padding: 8px 10px;
+  border-radius: 3px;
+}
+
+ng g cairlines .searh-input:active {
+  border: 1px solid #BBB;
+}
+
+.searh-input:focus {
+  border: 1px solid #AAA;
+}
+
+img {
+  width: 50px;
+  height: 50px;
+}

@@ -1,0 +1,80 @@
+<div class="page-header">
+  <div class="container">
+      <h1>Booking History</h1>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="row end-xs mt-1">
+      <div class="col-xs-12">
+
+          <a routerLink="/searchall" mat-raised-button color="primary" class="ml-1">Add New booking</a>
+      </div>
+  </div>
+
+  <div class="mt-1 mat-elevation-z8">
+      <table mat-table matSort [dataSource]="dataSource" class="">
+
+
+          <ng-container matColumnDef="pnr">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>PNR</th>
+              <td mat-cell *matCellDef="let element"> {{element.pnr}} </td>
+          </ng-container>
+          <ng-container matColumnDef="flightNumber">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Flight Number</th>
+              <td mat-cell *matCellDef="let element"> {{element.flightNumber}} </td>
+          </ng-container>
+          <!-- <ng-container matColumnDef="bookingName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Booking Name</th>
+              <td mat-cell *matCellDef="let element"> {{element.bookingName}} </td>
+          </ng-container> -->
+          <ng-container matColumnDef="bookingDateTime">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Booking DateTime</th>
+              <td mat-cell *matCellDef="let element"> {{element.bookingDateTime | date:'dd-MM-yyyy hh-mm'}} </td>
+          </ng-container>
+          <ng-container matColumnDef="numberofSeats">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Number of Seats</th>
+              <td mat-cell *matCellDef="let element"> {{element.numberofSeats}} </td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+              <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+          </ng-container>
+
+
+
+
+          <!-- Edit Column -->
+          <ng-container matColumnDef="Cancel" >
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element" >
+
+              <div *ngIf="element.status==='Active'">
+                  <button mat-raised-button color="warn" (click)="onDelete(element.pnr)">Cancel</button>
+              </div>
+
+
+              </td>
+          </ng-container>
+
+           <ng-container matColumnDef="pdf" >
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element" >
+                <div *ngIf="element.status==='Active'">
+                  <button mat-raised-button color="accent" (click)="onGenerate(element.pnr)">Download Ticket</button>
+                </div>
+                </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" z->
+      </mat-paginator>
+
+  </div>
+
+</div>

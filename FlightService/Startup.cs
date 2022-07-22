@@ -57,9 +57,10 @@ namespace FlightService
 
                 x.UsingRabbitMq((context, cfg) =>
                 {
+                    //cfg.Host("rabbitmq://20.102.96.239:15672/", h =>
                     cfg.Host("rabbitmq://localhost/", h =>
                     {
-                        h.Username("guest");
+                    h.Username("guest");
                         h.Password("guest");
                     });
 
@@ -107,10 +108,10 @@ namespace FlightService
             app.UseHttpsRedirection();
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath , "Resources")),
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Resources")),
                 RequestPath = "/Resources"
             });
-            
+
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseConsul(Configuration);

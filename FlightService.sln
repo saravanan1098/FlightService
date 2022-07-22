@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlightService", "FlightServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingService", "BookingService\BookingService.csproj", "{31ADF774-2868-47B7-AE71-93C915B878AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService", "AuthenticationService\AuthenticationService.csproj", "{DF08770B-48BB-46FF-AA6D-8B18E4CC0020}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationService", "AuthenticationService\AuthenticationService.csproj", "{DF08770B-48BB-46FF-AA6D-8B18E4CC0020}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "common", "AppExtension\common.csproj", "{5F902120-809A-471C-A510-0B2894E29F5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "common", "AppExtension\common.csproj", "{5F902120-809A-471C-A510-0B2894E29F5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGateways", "APIGateways\APIGateways.csproj", "{E7B0CE6C-4BC5-4A4E-829F-986103D83894}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIGateways", "APIGateways\APIGateways.csproj", "{E7B0CE6C-4BC5-4A4E-829F-986103D83894}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

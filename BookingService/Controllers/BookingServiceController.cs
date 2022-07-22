@@ -233,14 +233,14 @@ namespace BookingService.Controllers
              <h1 class='header'>Booking Details</h1>  
            </head>
           <body class='body'>
-          <p>PNR : {bookingmodel.PNR}</p>
-          <p>Flight Number : {bookingmodel.FlightNumber}</p>
-          <p>From Place : {flightmodel.FromPlace}</p>
-          <p>To Place : {flightmodel.ToPlace}</p>
-          <p> Departure Time : {flightmodel.StartDateTime}</p>
-          <p>Status : {bookingmodel.Status}</p>
-          <p>No. Of Seats : {bookingmodel.NumberofSeats}</p>
-          <p>Booking Datetime : {bookingmodel.BookingDateTime}</p>
+          <p><b>PNR</b> : {bookingmodel.PNR}</p>
+          <p><b>Flight Number</b> : {bookingmodel.FlightNumber}</p>
+          <p><b>From Place</b> : {flightmodel.FromPlace}</p>
+          <p><b>To Place</b> : {flightmodel.ToPlace}</p>
+          <p><b>Departure Time</b> : {flightmodel.StartDateTime}</p>
+          <p><b>Status</b> : {bookingmodel.Status}</p>
+          <p><b>No. Of Seats</b> : {bookingmodel.NumberofSeats}</p>
+          <p><b>Booking Datetime</b> : {bookingmodel.BookingDateTime}</p>
               <p>{html1}</p>
           </body>
           </html>

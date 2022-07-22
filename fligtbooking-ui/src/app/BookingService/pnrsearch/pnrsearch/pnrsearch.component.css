@@ -1,0 +1,72 @@
+table {
+  width: 100%;
+  overflow-x: scroll;
+}
+
+.searh-input {
+  outline: none;
+  border: 1px solid #CCC;
+  padding: 8px 10px;
+  border-radius: 3px;
+}
+
+ng g cairlines .searh-input:active {
+  border: 1px solid #BBB;
+}
+
+.searh-input:focus {
+  border: 1px solid #AAA;
+}
+
+img {
+  width: 50px;
+  height: 50px;
+}
+
+.top-row {
+  padding: 1em 0;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.image-container {
+  width: 200px;
+  height: 200px;
+  background-color: #F7f7f7;
+  border: 2px solid #CCC;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 200px;
+}
+
+.top-row {
+  padding: 1em 0;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.image-container {
+  width: 200px;
+  height: 200px;
+  background-color: #F7f7f7;
+  border: 2px solid #CCC;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 200px;
+}

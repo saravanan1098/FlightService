@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+  <div class="conatainer">
+    <!-- <a routerLink="/" mat-fab color="accent"> -->
+      <a routerLink="/" mat-raised-button >Home</a>
+      <a routerLink="/register" mat-raised-button *ngIf="!isUserLoggedIn" >Register User</a>
+      <!-- <a routerLink="/register" mat-raised-button  >Register User</a> -->
+      <a routerLink="/login" mat-raised-button *ngIf="!isUserLoggedIn" >Login</a>
+      <!-- <a routerLink="/login" mat-raised-button>Login</a> -->
+    <a routerLink="/airlines" mat-raised-button  *ngIf="isAdmin">Manage Airlines</a>
+    <!-- <a routerLink="/airlines" mat-raised-button >Manage Airlines</a> -->
+    <a routerLink="/flights" mat-raised-button  *ngIf="isAdmin" class="ml-1" >Flight</a>
+    <!-- <a routerLink="/flights" mat-raised-button  class="ml-1" >Flight</a> -->
+    <a routerLink="/searchall" mat-raised-button >Book Ticket</a>
+    <a routerLink="bookinghistory" mat-raised-button *ngIf="isUserLoggedIn" >Book History</a>
+    <!-- <a routerLink="/bookinghistory" mat-raised-button >Book History</a> -->
+    <a routerLink="/pnrsearch" mat-raised-button >PNR Search</a>
+    <a routerLink="/login" mat-raised-button  *ngIf="isUserLoggedIn" (click)="logout()">Logout</a>
+  </div>
+</mat-toolbar>
+
